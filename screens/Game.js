@@ -10,16 +10,18 @@ export default function Game() {
   const [choice, setChoice] = useState("");
   const navigation = useNavigation();
   useEffect(() => {
-    // console.log("enterdd ",baseNumber,score,choice);
-    if (choice) {
-      // console.log("before ",baseNumber,score,choice);
-      const winner =
-        (choice === "higher" && score > baseNumber) ||
-        (choice === "lower" && baseNumber > score);
-      Alert.alert(`You've ${winner ? "won" : "lost"}`, `You scored: ${score}`);
-      //   console.log("after ",baseNumber,score,choice);
-      navigation.goBack();
-    }
+    console.log("enterdd ",baseNumber,score,choice);
+    return ((choice)=>{
+      if (choice) {
+        console.log("before ",baseNumber,score,choice);
+        const winner =
+          (choice === "higher" && score > baseNumber) ||
+          (choice === "lower" && baseNumber > score);
+          console.log("after ",baseNumber,score,choice);
+        navigation.navigate('Result', { winner })
+      }
+    })
+    
   }, [baseNumber, score, choice]);
   return (
     <View style={styles.container}>
