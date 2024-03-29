@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, View, Alert } from "react-native";
+import { StyleSheet, Text, View, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+
+import AnimatedButton from "../components/AnimatedButton";
+
 export default function Game() {
   const baseNumber = Math.floor(Math.random() * 100);
   const score = Math.floor(Math.random() * 100);
@@ -9,20 +12,20 @@ export default function Game() {
   useEffect(() => {
     // console.log("enterdd ",baseNumber,score,choice);
     if (choice) {
-        // console.log("before ",baseNumber,score,choice);
+      // console.log("before ",baseNumber,score,choice);
       const winner =
         (choice === "higher" && score > baseNumber) ||
         (choice === "lower" && baseNumber > score);
       Alert.alert(`You've ${winner ? "won" : "lost"}`, `You scored: ${score}`);
-    //   console.log("after ",baseNumber,score,choice);
-        navigation.goBack();
+      //   console.log("after ",baseNumber,score,choice);
+      navigation.goBack();
     }
   }, [baseNumber, score, choice]);
   return (
     <View style={styles.container}>
-      <Text>Starting: {baseNumber}</Text>
-      <Button onPress={() => setChoice("higher")} title="Higher" />
-      <Button onPress={() => setChoice("lower")} title="Lower" />
+      <Text style={styles.baseNumber}>Starting: {baseNumber}</Text>
+      <AnimatedButton action="higher" onPress={() => setChoice("higher")} />
+      <AnimatedButton action="lower" onPress={() => setChoice("lower")} />
     </View>
   );
 }
@@ -32,5 +35,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  baseNumber: {
+    fontSize: 48,
+    marginBottom: 30,
+  },
+  button: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-around",
+    borderRadius: 15,
+    padding: 30,
+    marginVertical: 15,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 24,
+  },
+  buttonRed: {
+    backgroundColor: "red",
+  },
+  buttonGreen: {
+    backgroundColor: "green",
   },
 });
